@@ -12,6 +12,10 @@ const xss = require('xss-clean')
 const rateLimitter = require('express-rate-limit')
 
 
+//Swagger
+const swaggerUI = require('swagger-ui-express')
+const swaggerDocument = require('yamljs').load('./swagger.yaml')
+
 const app = express();
 
 // error handler
@@ -32,8 +36,9 @@ app.use(xss())
 
 // routes
 app.get('/', (req, res) => {
-  res.send('jobs api');
+  res.send('<a href="/swagger-ui>Swagger API</a>');
 });
+app.use('/swagger-ui', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/jobs', authenticationMiddleware, jobRouter)
