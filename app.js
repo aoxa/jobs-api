@@ -30,8 +30,6 @@ app.use(helmet())
 app.use(cors())
 app.use(xss())
 
-
-
 // routes
 app.get('/', (req, res) => {
   res.send('jobs api');
@@ -48,7 +46,7 @@ const port = process.env.PORT || 3000;
 const start = async () => {
   try {
     await connectDB(process.env.DATASOURCE_URL)
-    app.listen(port, () =>
+    app.listen(port, '0.0.0.0', () =>
       console.log(`Server is listening on port ${port}...`)
     );
   } catch (error) {
